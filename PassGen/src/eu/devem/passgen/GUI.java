@@ -136,63 +136,67 @@ public class GUI extends JFrame implements MouseListener, ChangeListener, ItemLi
 
 	@Override
 	public void stateChanged(ChangeEvent e) {
-		if(e.getSource().equals(sliderPasswordLength)) {
-			JSlider slider = (JSlider) e.getSource();
-			if(!slider.getValueIsAdjusting()) {
-				
-			}
-		}
+//		if(e.getSource().equals(sliderPasswordLength)) {
+//			JSlider slider = (JSlider) e.getSource();
+//			if(!slider.getValueIsAdjusting()) {
+//				controller.generatePassword();
+//			}
+//		}
 		
 	}
 
 	@Override
 	public void itemStateChanged(ItemEvent e) {
 		 if(e.getSource().equals(checkBoxUppercaseLetters)) {
-			 
+			// controller.generatePassword();
 		 }
 		 
 		 if(e.getSource().equals(checkBoxLowercaseLetters)) {
-			 
+			// controller.generatePassword();
 		 }
 		 
 		 if(e.getSource().equals(checkBoxSpecialCharacters)) {
-			 
+			// controller.generatePassword();
 		 }
 		 
 		 if(e.getSource().equals(checkBoxNumbers)) {
-			 
+			// controller.generatePassword();
 		 }
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("Regenerate")) {
-			
+			if(checkBoxUppercaseLetters.isSelected() || checkBoxLowercaseLetters.isSelected() || checkBoxSpecialCharacters.isSelected() || checkBoxNumbers.isSelected()) {
+				if(sliderPasswordLength.getValue()>0) {
+					controller.generatePassword();
+				}
+			}
 		}
 	}
 
-	public JSlider getSliderPasswordLength() {
-		return sliderPasswordLength;
+	public int getSliderPasswordLength() {
+		return sliderPasswordLength.getValue();
 	}
 
-	public JCheckBox getCheckBoxUppercaseLetters() {
-		return checkBoxUppercaseLetters;
+	public boolean getCheckBoxUppercaseLetters() {
+		return checkBoxUppercaseLetters.isSelected();
 	}
 
-	public JCheckBox getCheckBoxLowercaseLetters() {
-		return checkBoxLowercaseLetters;
+	public boolean getCheckBoxLowercaseLetters() {
+		return checkBoxLowercaseLetters.isSelected();
 	}
 
-	public JCheckBox getCheckBoxSpecialCharacters() {
-		return checkBoxSpecialCharacters;
+	public boolean getCheckBoxSpecialCharacters() {
+		return checkBoxSpecialCharacters.isSelected();
 	}
 
-	public JCheckBox getCheckBoxNumbers() {
-		return checkBoxNumbers;
+	public boolean getCheckBoxNumbers() {
+		return checkBoxNumbers.isSelected();
 	}
 
-	public JTextField getTextFieldPassword() {
-		return textFieldPassword;
+	public void setTextFieldPassword(String s) {
+		textFieldPassword.setText(s);
 	}
 
 }
