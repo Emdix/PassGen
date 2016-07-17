@@ -25,57 +25,45 @@ public class Controller {
 		String[] uppercaseArray = passgen.getUpperCase();
 		String[] lowercaseArray = passgen.getLowerCase();
 		String[] specialCharactersArray = passgen.getSpecialCharacters();
-		char[] numbersArray = passgen.getNumbers();
-		String result = "1";
+		int[] numbersArray = passgen.getNumbers();
+		String result = "";
 		
-		while(true) {
-			lengthUppercase = (int) (Math.random()*length+1);
-			lengthLowercase = (int) (Math.random()*length+1);
-			lengthSpecial = (int) (Math.random()*length+1);
-			lengthNumbers = (int) (Math.random()*length+1);
-			
-			if(uppercase == true){
-				combination += lengthUppercase;
-			}
-			if(lowercase == true) {
-				combination += lengthLowercase;
-			}
-			if(specialCharacters == true) {
-				combination += lengthSpecial;
-			}
-			if(numbers == true) {
-				combination += lengthNumbers;
-			}
-			System.out.println(combination);
-			
-			if(combination == length) {
-				break;
-			}
+		while(combination != length) {
 			combination = 0;
+			if(uppercase){
+				lengthUppercase = (int) (Math.random()*length+Math.random());
+			}
+			if(lowercase) {
+				lengthLowercase = (int) (Math.random()*length+Math.random());
+			}
+			if(specialCharacters) {
+				lengthSpecial = (int) (Math.random()*length+Math.random());
+			}
+			if(numbers) {
+				lengthNumbers = (int) (Math.random()*length+Math.random());
+			}
+			combination = lengthUppercase + lengthLowercase + lengthSpecial + lengthNumbers;
 		}
-		System.out.println(lengthLowercase);
 		
-		while(length>0) {
+		while(length>result.length()) {
 			currentCombination = (int) (Math.random()*4+1);
-			//System.out.println(currentCombination);
-			if(currentCombination == 1) {
-				result.concat("g"+uppercaseArray[(int) (Math.random()*uppercaseArray.length)]+1);
-				length--;
+			if(currentCombination == 1 && lengthUppercase > 0) {
+				result = (result+uppercaseArray[(int) (Math.random()*uppercaseArray.length)]);
+				lengthUppercase--;
 			}
-			if(currentCombination == 2) {
-				result.concat(lowercaseArray[(int) (Math.random()*lowercaseArray.length)]+1);
-				length--;
+			if(currentCombination == 2 && lengthLowercase > 0) {
+				result = (result+lowercaseArray[(int) (Math.random()*lowercaseArray.length)]);
+				lengthLowercase--;
 			}
-			if(currentCombination == 3) {
-				result.concat(specialCharactersArray[(int) (Math.random()*specialCharactersArray.length)]+1);
-				length--;
+			if(currentCombination == 3 && lengthSpecial > 0) {
+				result = (result+(String)specialCharactersArray[(int) (Math.random()*specialCharactersArray.length)]);
+				lengthSpecial--;
 			}
-			if(currentCombination == 4) {
-				result.concat(""+numbersArray[(int) (Math.random()*numbersArray.length)]+1);
-				length--;
+			if(currentCombination == 4 && lengthNumbers > 0) {
+				result = (result+String.valueOf(numbersArray[(int) (Math.random()*numbersArray.length)]));
+				lengthNumbers--;
 			}
 		}
-		System.out.println(result);
 		gui.setTextFieldPassword(result);
 	}
 }
