@@ -1,6 +1,9 @@
 package eu.devem.passgen;
 
 import java.awt.Color;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -29,7 +32,7 @@ public class GUI extends JFrame implements MouseListener, ChangeListener, ItemLi
 	private JSlider sliderPasswordLength;
 	private JCheckBox checkBoxUppercaseLetters, checkBoxLowercaseLetters, checkBoxSpecialCharacters, checkBoxNumbers;
 	private JTextField textFieldPassword;
-	private JButton buttonRegenerate;
+	private JButton buttonRegenerate, buttonCopyToClipboard;
 
 	public GUI(Controller controller) {
 		this.controller = controller;
@@ -110,6 +113,11 @@ public class GUI extends JFrame implements MouseListener, ChangeListener, ItemLi
 		buttonRegenerate.addActionListener(this);
 		panel.add(buttonRegenerate);
 		
+		buttonCopyToClipboard = new JButton("Copy to clipboard");
+		buttonCopyToClipboard.setBounds(160, 190, 150, 20);
+		buttonCopyToClipboard.addActionListener(this);
+		panel.add(buttonCopyToClipboard);
+		
 		panel.repaint();
 		
 	}
@@ -173,6 +181,11 @@ public class GUI extends JFrame implements MouseListener, ChangeListener, ItemLi
 				}
 			}
 		}
+		if(e.getActionCommand().equals("Copy to clipboard")) {
+			StringSelection stringSelection = new StringSelection(getTextFieldPassword());
+			Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
+			clpbrd.setContents(stringSelection, null);
+		}
 	}
 
 	public int getSliderPasswordLength() {
@@ -197,6 +210,10 @@ public class GUI extends JFrame implements MouseListener, ChangeListener, ItemLi
 
 	public void setTextFieldPassword(String s) {
 		textFieldPassword.setText(s);
+	}
+	
+	public String getTextFieldPassword() {
+		return textFieldPassword.getText();
 	}
 
 }
