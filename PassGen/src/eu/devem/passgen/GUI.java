@@ -75,33 +75,33 @@ public class GUI extends JFrame implements MouseListener, ChangeListener, ItemLi
 		checkBoxUppercaseLetters = new JCheckBox("Uppercase letters");
 		checkBoxUppercaseLetters.setBounds(10, 65, 150, 15);
 		checkBoxUppercaseLetters.setBackground(Color.WHITE);
+		checkBoxUppercaseLetters.setSelected(true);
 		checkBoxUppercaseLetters.addItemListener(this);
 		checkBoxUppercaseLetters.setFocusable(false);
-		checkBoxUppercaseLetters.setSelected(true);
 		panel.add(checkBoxUppercaseLetters);
 		
 		checkBoxLowercaseLetters = new JCheckBox("Lowercase letters");
 		checkBoxLowercaseLetters.setBounds(10, 80, 150, 15);
 		checkBoxLowercaseLetters.setBackground(Color.WHITE);
+		checkBoxLowercaseLetters.setSelected(true);
 		checkBoxLowercaseLetters.addItemListener(this);
 		checkBoxLowercaseLetters.setFocusable(false);
-		checkBoxLowercaseLetters.setSelected(true);
 		panel.add(checkBoxLowercaseLetters);
 		
 		checkBoxSpecialCharacters = new JCheckBox("Special characters");
 		checkBoxSpecialCharacters.setBounds(10, 95, 150, 15);
 		checkBoxSpecialCharacters.setBackground(Color.WHITE);
+		checkBoxSpecialCharacters.setSelected(true);
 		checkBoxSpecialCharacters.addItemListener(this);
 		checkBoxSpecialCharacters.setFocusable(false);
-		checkBoxSpecialCharacters.setSelected(true);
 		panel.add(checkBoxSpecialCharacters);
 		
 		checkBoxNumbers = new JCheckBox("Numbers");
 		checkBoxNumbers.setBounds(10, 110, 150, 15);
 		checkBoxNumbers.setBackground(Color.WHITE);
+		checkBoxNumbers.setSelected(true);
 		checkBoxNumbers.addItemListener(this);
 		checkBoxNumbers.setFocusable(false);
-		checkBoxNumbers.setSelected(true);
 		panel.add(checkBoxNumbers);
 		
 		textFieldPassword = new JTextField();
@@ -149,31 +149,46 @@ public class GUI extends JFrame implements MouseListener, ChangeListener, ItemLi
 
 	@Override
 	public void stateChanged(ChangeEvent e) {
-//		if(e.getSource().equals(sliderPasswordLength)) {
-//			JSlider slider = (JSlider) e.getSource();
-//			if(!slider.getValueIsAdjusting()) {
-//				controller.generatePassword();
-//			}
-//		}
+		if(checkBoxUppercaseLetters.isSelected() || checkBoxLowercaseLetters.isSelected() || checkBoxSpecialCharacters.isSelected() || checkBoxNumbers.isSelected()) {
+			if(sliderPasswordLength.getValue()>0) {
+				controller.generatePassword();
+			}
+		}
 		
 	}
 
 	@Override
 	public void itemStateChanged(ItemEvent e) {
 		 if(e.getSource().equals(checkBoxUppercaseLetters)) {
-			// controller.generatePassword();
+			 if(checkBoxUppercaseLetters.isSelected() || checkBoxLowercaseLetters.isSelected() || checkBoxSpecialCharacters.isSelected() || checkBoxNumbers.isSelected()) {
+				 if(sliderPasswordLength.getValue()>0) {
+					 controller.generatePassword();
+				 }
+			 }
 		 }
 		 
 		 if(e.getSource().equals(checkBoxLowercaseLetters)) {
-			// controller.generatePassword();
+			 if(checkBoxUppercaseLetters.isSelected() || checkBoxLowercaseLetters.isSelected() || checkBoxSpecialCharacters.isSelected() || checkBoxNumbers.isSelected()) {
+				 if(sliderPasswordLength.getValue()>0) {
+					 controller.generatePassword();
+				 }
+			 }
 		 }
 		 
 		 if(e.getSource().equals(checkBoxSpecialCharacters)) {
-			// controller.generatePassword();
+			 if(checkBoxUppercaseLetters.isSelected() || checkBoxLowercaseLetters.isSelected() || checkBoxSpecialCharacters.isSelected() || checkBoxNumbers.isSelected()) {
+				 if(sliderPasswordLength.getValue()>0) {
+					 controller.generatePassword();
+				 }
+			 }
 		 }
 		 
 		 if(e.getSource().equals(checkBoxNumbers)) {
-			// controller.generatePassword();
+			 if(checkBoxUppercaseLetters.isSelected() || checkBoxLowercaseLetters.isSelected() || checkBoxSpecialCharacters.isSelected() || checkBoxNumbers.isSelected()) {
+				 if(sliderPasswordLength.getValue()>0) {
+					 controller.generatePassword();
+				 }
+			 }
 		 }
 	}
 
