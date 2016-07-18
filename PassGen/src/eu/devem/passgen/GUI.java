@@ -1,9 +1,6 @@
 package eu.devem.passgen;
 
 import java.awt.Color;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -113,12 +110,14 @@ public class GUI extends JFrame implements MouseListener, ChangeListener, ItemLi
 		
 		buttonRegenerate = new JButton("Regenerate");
 		buttonRegenerate.setBounds(10, 180, 150, 20);
+		buttonRegenerate.setBackground(Color.WHITE);
 		buttonRegenerate.addActionListener(this);
 		buttonRegenerate.setFocusable(false);
 		panel.add(buttonRegenerate);
 		
 		buttonCopyToClipboard = new JButton("Copy to clipboard");
 		buttonCopyToClipboard.setBounds(170, 180, 150, 20);
+		buttonCopyToClipboard.setBackground(Color.WHITE);
 		buttonCopyToClipboard.addActionListener(this);
 		buttonCopyToClipboard.setFocusable(false);
 		panel.add(buttonCopyToClipboard);
@@ -149,9 +148,12 @@ public class GUI extends JFrame implements MouseListener, ChangeListener, ItemLi
 
 	@Override
 	public void stateChanged(ChangeEvent e) {
+		JSlider slider = (JSlider) e.getSource();
 		if(checkBoxUppercaseLetters.isSelected() || checkBoxLowercaseLetters.isSelected() || checkBoxSpecialCharacters.isSelected() || checkBoxNumbers.isSelected()) {
 			if(sliderPasswordLength.getValue()>0) {
-				controller.generatePassword();
+				if(slider.getValueIsAdjusting()) {
+					controller.generatePassword();
+				}
 			}
 		}
 		
@@ -159,37 +161,11 @@ public class GUI extends JFrame implements MouseListener, ChangeListener, ItemLi
 
 	@Override
 	public void itemStateChanged(ItemEvent e) {
-		 if(e.getSource().equals(checkBoxUppercaseLetters)) {
-			 if(checkBoxUppercaseLetters.isSelected() || checkBoxLowercaseLetters.isSelected() || checkBoxSpecialCharacters.isSelected() || checkBoxNumbers.isSelected()) {
-				 if(sliderPasswordLength.getValue()>0) {
-					 controller.generatePassword();
-				 }
-			 }
-		 }
-		 
-		 if(e.getSource().equals(checkBoxLowercaseLetters)) {
-			 if(checkBoxUppercaseLetters.isSelected() || checkBoxLowercaseLetters.isSelected() || checkBoxSpecialCharacters.isSelected() || checkBoxNumbers.isSelected()) {
-				 if(sliderPasswordLength.getValue()>0) {
-					 controller.generatePassword();
-				 }
-			 }
-		 }
-		 
-		 if(e.getSource().equals(checkBoxSpecialCharacters)) {
-			 if(checkBoxUppercaseLetters.isSelected() || checkBoxLowercaseLetters.isSelected() || checkBoxSpecialCharacters.isSelected() || checkBoxNumbers.isSelected()) {
-				 if(sliderPasswordLength.getValue()>0) {
-					 controller.generatePassword();
-				 }
-			 }
-		 }
-		 
-		 if(e.getSource().equals(checkBoxNumbers)) {
-			 if(checkBoxUppercaseLetters.isSelected() || checkBoxLowercaseLetters.isSelected() || checkBoxSpecialCharacters.isSelected() || checkBoxNumbers.isSelected()) {
-				 if(sliderPasswordLength.getValue()>0) {
-					 controller.generatePassword();
-				 }
-			 }
-		 }
+		if(checkBoxUppercaseLetters.isSelected() || checkBoxLowercaseLetters.isSelected() || checkBoxSpecialCharacters.isSelected() || checkBoxNumbers.isSelected()) {
+			if(sliderPasswordLength.getValue()>0) {
+				controller.generatePassword();
+			}
+		}
 	}
 
 	@Override
@@ -202,9 +178,7 @@ public class GUI extends JFrame implements MouseListener, ChangeListener, ItemLi
 			}
 		}
 		if(e.getActionCommand().equals("Copy to clipboard")) {
-			StringSelection stringSelection = new StringSelection(getTextFieldPassword());
-			Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
-			clpbrd.setContents(stringSelection, null);
+			controller.copyToClipboard();
 		}
 	}
 

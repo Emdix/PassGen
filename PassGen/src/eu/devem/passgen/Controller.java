@@ -1,5 +1,9 @@
 package eu.devem.passgen;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+
 public class Controller {
 	private GUI gui;
 	private PassGen passgen;
@@ -9,7 +13,7 @@ public class Controller {
 		passgen = new PassGen();
 		gui.initGUI();
 	}
-
+	
 	public void generatePassword() {
 		int length = gui.getSliderPasswordLength();
 		int lengthUppercase = 0;
@@ -31,39 +35,46 @@ public class Controller {
 		while(combination != length) {
 			combination = 0;
 			if(uppercase){
-				lengthUppercase = (int) (Math.random()*length+Math.random());
+				lengthUppercase = (int)(Math.random()*length+Math.random());
 			}
 			if(lowercase) {
-				lengthLowercase = (int) (Math.random()*length+Math.random());
+				lengthLowercase = (int)(Math.random()*length+Math.random());
 			}
 			if(specialCharacters) {
-				lengthSpecial = (int) (Math.random()*length+Math.random());
+				lengthSpecial = (int)(Math.random()*length+Math.random());
 			}
 			if(numbers) {
-				lengthNumbers = (int) (Math.random()*length+Math.random());
+				lengthNumbers = (int)(Math.random()*length+Math.random());
 			}
-			combination = lengthUppercase + lengthLowercase + lengthSpecial + lengthNumbers;
+			combination = lengthUppercase+lengthLowercase+lengthSpecial+lengthNumbers;
 		}
 		
-		while(length>result.length()) {
+		while(length > result.length()) {
 			currentCombination = (int) (Math.random()*4+1);
 			if(currentCombination == 1 && lengthUppercase > 0) {
-				result = (result+uppercaseArray[(int) (Math.random()*uppercaseArray.length)]);
+				result = (result+uppercaseArray[(int)(Math.random()*uppercaseArray.length)]);
 				lengthUppercase--;
 			}
 			if(currentCombination == 2 && lengthLowercase > 0) {
-				result = (result+lowercaseArray[(int) (Math.random()*lowercaseArray.length)]);
+				result = (result+lowercaseArray[(int)(Math.random()*lowercaseArray.length)]);
 				lengthLowercase--;
 			}
 			if(currentCombination == 3 && lengthSpecial > 0) {
-				result = (result+(String)specialCharactersArray[(int) (Math.random()*specialCharactersArray.length)]);
+				result = (result+specialCharactersArray[(int)(Math.random()*specialCharactersArray.length)]);
 				lengthSpecial--;
 			}
 			if(currentCombination == 4 && lengthNumbers > 0) {
-				result = (result+String.valueOf(numbersArray[(int) (Math.random()*numbersArray.length)]));
+				result = (result+String.valueOf(numbersArray[(int)(Math.random()*numbersArray.length)]));
 				lengthNumbers--;
 			}
 		}
+		
 		gui.setTextFieldPassword(result);
+	}
+	
+	public void copyToClipboard() {
+		StringSelection stringSelection = new StringSelection(gui.getTextFieldPassword());
+		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		clipboard.setContents(stringSelection, null);
 	}
 }
